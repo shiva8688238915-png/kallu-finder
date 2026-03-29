@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Profile | {{ s.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --success: #28a745;
+            --dark: #202124;
+            --gray: #5f6368;
+            --bg: #f8f9fa;
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg); 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh;
+        }
+        .profile-card { 
+            background: white; 
+            width: 90%; 
+            max-width: 400px; 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            text-align: center;
+        }
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: #e8f0fe;
+            color: var(--primary);
+            font-size: 32px;
+            line-height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+        h2 { margin: 10px 0; color: var(--dark); }
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .available { background: #d4edda; color: #155724; }
+        .busy { background: #f8d7da; color: #721c24; }
+
+        .info-grid {
+            text-align: left;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .info-item { margin-bottom: 15px; }
+        .label { font-size: 12px; color: var(--gray); text-transform: uppercase; font-weight: bold; }
+        .value { font-size: 16px; color: var(--dark); margin-top: 4px; }
+        .price { font-size: 24px; color: var(--success); font-weight: bold; }
+
+        .action-buttons { margin-top: 30px; display: flex; flex-direction: column; gap: 10px; }
+        .btn {
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-call { background: var(--primary); color: white; }
+        .btn-call:hover { background: #1557b0; }
+        .btn-maps { background: #f1f3f4; color: var(--dark); font-size: 14px; }
+        .back-link { margin-top: 20px; display: block; color: var(--gray); text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <div class="avatar">{{ s.name[0] }}</div>
+        <h2>{{ s.name }}</h2>
+        
+        <div class="status-badge {% if s.status|lower == 'available' %}available{% else %}busy{% endif %}">
+            {{ s.status }}
+        </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="label">Price per Liter</div>
+                <div class="price">₹{{ s.price }}</div>
+            </div>
+
+            <div class="info-item">
+                <div class="label">Address</div>
+                <div class="value">{{ s.address }}</div>
+            </div>
+
+            <div class="info-item">
+                <div class="label">Contact</div>
+                <div class="value">+91 {{ s.phone }}</div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="tel:{{ s.phone }}" class="btn btn-call">📞 Call Seller Now</a>
+            
+            <a href="https://www.google.com/maps/search/?api=1&query={{ s.latitude }},{{ s.longitude }}" 
+               target="_blank" class="btn btn-maps">
+               📍 Get Directions
+            </a>
+        </div>
+
+        <a href="javascript:history.back()" class="back-link">← Back to Results</a>
+    </div>
+
+</body>
+</html>

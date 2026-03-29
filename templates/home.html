@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Kallu Finder</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ✅ IMAGE ADDED HERE -->
+        <img src="{{ url_for('static', filename='images/kallu.jpg') }}" 
+             style="width:100%; height:250px; object-fit:cover; border-radius:10px; margin-bottom:20px;">
+
+        <h1>Kallu Finder 🍶</h1>
+
+        <button class="btn btn-primary" onclick="getLocation()">📍 Use My Location</button>
+
+        <a href="/benefits" class="btn btn-outline" style="text-decoration: none;">
+            💡 Kallu Benefits
+        </a>
+
+        <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+            <h3>Login Options</h3>
+            
+            <div style="display: flex; gap: 10px;">
+                <a href="/login" class="btn btn-secondary" style="flex: 1; text-decoration: none;">
+                    👨‍💼 Admin
+                </a>
+
+                <a href="/seller_login" class="btn btn-secondary" style="flex: 1; text-decoration: none;">
+                    🧑‍🌾 Seller
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function getLocation() {
+        console.log("Button clicked");
+
+        if (navigator.geolocation) {
+            console.log("Requesting location...");
+            
+            navigator.geolocation.getCurrentPosition(
+                function(pos) {
+                    let lat = pos.coords.latitude;
+                    let lon = pos.coords.longitude;
+                    window.location.href = "/search?lat=" + lat + "&lon=" + lon;
+                },
+                function(error) {
+                    console.log(error);
+                    alert("Error: " + error.message + "\n\nNote: Location requires HTTPS or localhost.");
+                },
+                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+            );
+        } else {
+            alert("Geolocation not supported by this browser.");
+        }
+    }
+    </script>
+
+</body>
+</html>

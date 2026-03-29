@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Sellers | Kallu Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            padding: 20px; 
+            background-color: #f8f9fa; 
+            max-width: 800px;
+            margin: auto;
+        }
+        h2 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #007bff; 
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .seller-item { 
+            background: white; 
+            padding: 20px; 
+            margin: 15px 0; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        .seller-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .seller-info a {
+            font-size: 1.2em;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .seller-info a:hover {
+            text-decoration: underline;
+        }
+        .details {
+            color: #666;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        .status-badge { 
+            font-weight: bold; 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            text-transform: capitalize;
+            font-size: 0.85em;
+        }
+        /* Color coding for different statuses */
+        .available { background-color: #d4edda; color: #155724; }
+        .not-available { background-color: #f8d7da; color: #721c24; }
+        .unreachable { background-color: #fff3cd; color: #856404; }
+        
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            color: #888;
+        }
+        .back-btn {
+            font-size: 0.5em;
+            background: #6c757d;
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>
+        Verified Sellers 🧑‍🌾
+        <a href="/" class="back-btn">Home</a>
+    </h2>
+
+    {% if sellers %}
+        {% for s in sellers %}
+        <div class="seller-item">
+            <div class="seller-info">
+                <a href="{{ url_for('profile', seller_id=s.id) }}">
+                    {{ s.name }}
+                </a>
+                <div class="details">
+                    📍 {{ s.distance }} km away
+                </div>
+            </div>
+
+            <span class="status-badge 
+                {% if s.status|lower == 'available' %}available
+                {% elif s.status|lower == 'unreachable' %}unreachable
+                {% else %}not-available{% endif %}">
+                {{ s.status }}
+            </span>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-results">
+            <h3>No verified sellers found nearby.</h3>
+            <p>Try moving to a different location or check back later!</p>
+        </div>
+    {% endif %}
+
+    <p style="text-align:center; color:#aaa; font-size: 0.8em; margin-top: 30px;">
+        Click on a seller's name to view full price and contact details.
+    </p>
+
+</body>
+</html>

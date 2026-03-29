@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard | Kallu Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .dashboard-container { width: 100%; max-width: 500px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        .current-status { margin-bottom: 25px; padding: 15px; border-radius: 8px; font-weight: bold; background: #f1f3f5; }
+        .status-buttons { display: flex; flex-direction: column; gap: 10px; }
+        .btn { padding: 15px; text-decoration: none; color: white; border-radius: 6px; font-weight: bold; transition: opacity 0.3s; }
+        .btn:hover { opacity: 0.85; }
+        .available { background-color: #28a745; }
+        .not_available { background-color: #dc3545; }
+        .unreachable { background-color: #ffc107; color: #212529; }
+        .back-link { display: block; margin-top: 25px; color: #6c757d; text-decoration: none; font-size: 14px; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h2>Seller Dashboard 🧑‍🌾</h2>
+        
+        <!-- Display Current Status from Database -->
+        <div class="current-status">
+            Current Status: <span>{{ current_status }}</span>
+        </div>
+
+        <p>Update your live availability:</p>
+
+        <div class="status-buttons">
+            <a href="{{ url_for('update_status', status='Available') }}" class="btn available">Available</a>
+            <a href="{{ url_for('update_status', status='Not Available') }}" class="btn not_available">Not Available</a>
+            <a href="{{ url_for('update_status', status='Unreachable') }}" class="btn unreachable">Unreachable</a>
+        </div>
+
+        <a href="/" class="back-link">← Logout & Back to Home</a>
+    </div>
+
+</body>
+</html>

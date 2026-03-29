@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Kallu Finder</title>
+    <!-- 1. This links your external style.css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- 2. REMOVED the internal <style> block so it doesn't conflict -->
+</head>
+<body>
+
+    <!-- 3. Wrap everything in a 'container' or 'card' class -->
+    <div class="card">
+        <h2>Login to Kallu Finder</h2>
+
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter Username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter Password" required>
+            </div>
+
+            <!-- 4. Added the 'btn' and 'btn-primary' classes -->
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+        <!-- 5. Added the 'back-link' class -->
+        <a href="/" class="back-link">Back to Home</a>
+    </div>
+
+</body>
+</html>

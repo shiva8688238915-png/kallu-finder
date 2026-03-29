@@ -1,0 +1,153 @@
+/* 1. Reset and Universal Box Sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 2. Global Variables */
+:root {
+    --primary: #2e7d32;
+    --primary-hover: #236327;
+    --secondary: #1a73e8;
+    --secondary-hover: #1557b0;
+    --bg: #f8f9fa;
+    --text: #202124;
+    --white: #ffffff;
+    --border: #dddddd;
+    --shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 3. Body Layout */
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* Horizontal centering */
+    justify-content: center; /* Vertical centering */
+    min-height: 100vh;      /* Ensures full screen height */
+}
+
+/* 4. Containers & Cards */
+.container, .card {
+    background: var(--white);
+    width: 100%;
+    max-width: 450px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+}
+
+/* 5. Headings */
+h1, h2, h3 {
+    color: var(--primary);
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 6. Buttons */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border: 2px solid transparent; /* 2px matches outline border to prevent resizing */
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary { 
+    background: var(--primary); 
+    color: var(--white); 
+}
+.btn-primary:hover { 
+    background: var(--primary-hover); 
+}
+
+.btn-secondary { 
+    background: var(--secondary); 
+    color: var(--white); 
+}
+.btn-secondary:hover { 
+    background: var(--secondary-hover); 
+}
+
+.btn-outline { 
+    background: transparent; 
+    border: 2px solid var(--primary); 
+    color: var(--primary); 
+}
+.btn-outline:hover { 
+    background: #e8f5e9; 
+}
+
+.btn:active { 
+    transform: scale(0.98); 
+}
+
+/* 7. Form Inputs */
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 18px 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 16px; /* Prevents auto-zoom on mobile */
+    color: var(--text);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+/* 8. Status Badges */
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.available { 
+    background: #e8f5e9; 
+    color: #2e7d32; 
+}
+
+.unavailable { 
+    background: #ffebee; 
+    color: #c62828; 
+}
+
+/* 9. Utility & Links */
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: #5f6368;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-link:hover { 
+    text-decoration: underline;
+    color: var(--primary);
+}
+
+/* 10. Helper Classes */
+.text-center { text-align: center; }
+.mt-20 { margin-top: 20px; }

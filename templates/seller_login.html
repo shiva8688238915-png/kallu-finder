@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Login | Kallu Finder</title>
+    
+    <!-- Link to your central style.css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <style>
+        /* Specific styling for the phone input prefix */
+        .phone-input-group {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .prefix {
+            background: #f1f1f1;
+            padding: 12px;
+            color: #666;
+            font-weight: bold;
+            border-right: 1px solid #ddd;
+        }
+        .phone-input-group input {
+            border: none !important;
+            margin-bottom: 0 !important;
+        }
+        .flash-error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Seller Login 🧑‍🌾</h2>
+
+    <!-- This section displays errors from flash("message") in app.py -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-error">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    
+    <form method="POST" action="{{ url_for('seller_login') }}">
+        <label>Registered Name</label>
+        <input type="text" name="name" placeholder="Enter your full name" required>
+
+        <label>Phone Number</label>
+        <div class="phone-input-group">
+            <span class="prefix">+91</span>
+            <input type="tel" name="phone" placeholder="10-digit number" pattern="[0-9]{10}" required title="Please enter a 10-digit phone number">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Verify & Login</button>
+    </form>
+
+    <a href="/" class="back-link">⬅ Back to Homepage</a>
+</div>
+
+</body>
+</html>
