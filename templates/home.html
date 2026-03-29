@@ -3,36 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kallu Finder | Fresh & Local</title>
     
-    <title>Kallu Finder</title>
-
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --accent-blue: #1a73e8;
+            --bg-light: #f8f9fa;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: var(--bg-light);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+        }
+
+        h1 {
+            color: #202124;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1b5e20;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: white;
+            color: var(--accent-blue);
+            border: 2px solid var(--accent-blue);
+        }
+
+        .btn-outline:hover {
+            background-color: #e8f0fe;
+        }
+
+        .login-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .login-section h3 {
+            font-size: 14px;
+            color: #5f6368;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .login-grid {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-secondary {
+            background-color: #f1f3f4;
+            color: #3c4043;
+            flex: 1;
+            font-size: 14px;
+            padding: 12px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e8eaed;
+        }
+
+        /* Loading Spinner style */
+        #loader {
+            display: none;
+            margin: 10px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-green);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
 
     <div class="container">
-
-        <!-- ✅ IMAGE ADDED HERE -->
         <img src="{{ url_for('static', filename='images/kallu.jpg') }}" 
-             style="width:100%; height:250px; object-fit:cover; border-radius:10px; margin-bottom:20px;">
+             alt="Fresh Kallu" 
+             class="hero-img">
 
         <h1>Kallu Finder 🍶</h1>
 
-        <button class="btn btn-primary" onclick="getLocation()">📍 Use My Location</button>
+        <button class="btn btn-primary" onclick="getLocation()" id="locationBtn">
+            📍 Use My Location
+        </button>
+        
+        <div id="loader"></div>
 
-        <a href="/benefits" class="btn btn-outline" style="text-decoration: none;">
-            💡 Kallu Benefits
+        <a href="{{ url_for('benefits') }}" class="btn btn-outline">
+            💡 Health Benefits
         </a>
 
-        <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
-            <h3>Login Options</h3>
-            
-            <div style="display: flex; gap: 10px;">
-                <a href="/login" class="btn btn-secondary" style="flex: 1; text-decoration: none;">
+        <div class="login-section">
+            <h3>Management Access</h3>
+            <div class="login-grid">
+                <a href="{{ url_for('login') }}" class="btn btn-secondary">
                     👨‍💼 Admin
                 </a>
-
-                <a href="/seller_login" class="btn btn-secondary" style="flex: 1; text-decoration: none;">
+                <a href="{{ url_for('seller_login') }}" class="btn btn-secondary">
                     🧑‍🌾 Seller
                 </a>
             </div>
@@ -41,25 +167,54 @@
 
     <script>
     function getLocation() {
-        console.log("Button clicked");
+        const btn = document.getElementById('locationBtn');
+        const loader = document.getElementById('loader');
+
+        // Show loading state
+        btn.disabled = true;
+        btn.innerText = "Finding you...";
+        loader.style.display = "block";
 
         if (navigator.geolocation) {
-            console.log("Requesting location...");
-            
             navigator.geolocation.getCurrentPosition(
                 function(pos) {
-                    let lat = pos.coords.latitude;
-                    let lon = pos.coords.longitude;
-                    window.location.href = "/search?lat=" + lat + "&lon=" + lon;
+                    const lat = pos.coords.latitude;
+                    const lon = pos.coords.longitude;
+                    // Redirect to search route with coordinates
+                    window.location.href = `/search?lat=${lat}&lon=${lon}`;
                 },
                 function(error) {
-                    console.log(error);
-                    alert("Error: " + error.message + "\n\nNote: Location requires HTTPS or localhost.");
+                    // Reset button state
+                    btn.disabled = false;
+                    btn.innerText = "📍 Use My Location";
+                    loader.style.display = "none";
+
+                    let msg = "Location error: ";
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            msg += "Please allow location access in your browser settings.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            msg += "Location information is unavailable.";
+                            break;
+                        case error.TIMEOUT:
+                            msg += "The request timed out.";
+                            break;
+                        default:
+                            msg += "An unknown error occurred.";
+                    }
+                    alert(msg + "\n\nNote: If you are on a phone, ensure GPS is turned ON.");
                 },
-                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+                { 
+                    enableHighAccuracy: true, 
+                    timeout: 8000, 
+                    maximumAge: 0 
+                }
             );
         } else {
-            alert("Geolocation not supported by this browser.");
+            alert("Geolocation is not supported by your browser.");
+            btn.disabled = false;
+            loader.style.display = "none";
         }
     }
     </script>

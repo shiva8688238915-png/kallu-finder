@@ -11,7 +11,6 @@ ADMIN_PASSWORD = "9177@Shiva"
 
 def get_db_connection():
     conn = sqlite3.connect('database.db')
-    # We do NOT use row_factory=Row here because your admin.html uses indexes like s[0], s[1]
     return conn
 
 def init_db():
@@ -35,6 +34,7 @@ def init_db():
 init_db()
 
 def calculate_distance(lat1, lon1, lat2, lon2):
+    """Calculates distance in KM"""
     return round(((float(lat1) - float(lat2))**2 + (float(lon1) - float(lon2))**2)**0.5 * 111, 2)
 
 # --- PUBLIC ROUTES ---
@@ -43,22 +43,27 @@ def calculate_distance(lat1, lon1, lat2, lon2):
 def home():
     return render_template('home.html')
 
+@app.route('/benefits')
+def benefits():
+    """This route loads your benefits.html file"""
+    return render_template('benefits.html')
+
 @app.route('/search')
 def search():
     try:
         user_lat = float(request.args.get('lat'))
         user_lon = float(request.args.get('lon'))
     except:
-        return "Location Error. Please enable GPS."
+        return "Location Error. Please enable GPS and try again."
 
     conn = get_db_connection()
-    # Fetching as list of tuples for index access
+    # Fetching as tuples for index-based access (s[0], s[1], etc.)
     data = conn.execute("SELECT * FROM sellers WHERE verified=1").fetchall()
     conn.close()
 
     results = []
     for s in data:
-        dist = calculate_distance(user_lat, user_lon, s[5], s[6]) # lat is index 5, lon is index 6
+        dist = calculate_distance(user_lat, user_lon, s[5], s[6])
         results.append({
             "id": s[0], "name": s[1], "distance": dist, "status": s[8]
         })
@@ -72,11 +77,13 @@ def profile(seller_id):
     row = conn.execute("SELECT * FROM sellers WHERE id = ?", (seller_id,)).fetchone()
     conn.close()
     if row:
-        # Map to 's' for profile.html
-        s_obj = {"id": row[0], "name": row[1], "address": row[2], "phone": row[3], 
-                 "price": row[4], "latitude": row[5], "longitude": row[6], "status": row[8]}
+        # Map to 's' dictionary for profile.html compatibility
+        s_obj = {
+            "id": row[0], "name": row[1], "address": row[2], "phone": row[3], 
+            "price": row[4], "latitude": row[5], "longitude": row[6], "status": row[8]
+        }
         return render_template('profile.html', s=s_obj)
-    return "Not Found", 404
+    return "Seller Not Found", 404
 
 # --- SELLER ROUTES ---
 
@@ -90,7 +97,7 @@ def seller_login():
         if seller:
             session['seller'] = phone
             return redirect(url_for('seller_dashboard'))
-        return "Not registered."
+        return "Phone not registered."
     return render_template('seller_login.html')
 
 @app.route('/seller_dashboard')
@@ -141,7 +148,7 @@ def add_seller():
         conn.commit()
         conn.close()
     except:
-        return "Phone number already exists!"
+        return "Error: Duplicate Phone Number!"
     return redirect(url_for('admin'))
 
 @app.route('/verify/<int:id>')
@@ -167,8 +174,6 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
-import os
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)
