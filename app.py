@@ -1,13 +1,24 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 import sqlite3
 import os
+from werkzeug.security import check_password_hash
+
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD_HASH = os.environ.get("ADMIN_PASSWORD_HASH") or "scrypt:32768:8:1$Q5r4WBi2h2W7PbQR$d6225b7b8b056a0d9680b28c290ed9de073fe8faf3dac893e5df45f19fb74737bccb44a4e707f11e56ccaadfb404848ce7bac0b8e76d7cd1cb7222918ffd6e8b"
+
+if not ADMIN_PASSWORD_HASH:
+    print("ERROR: Admin password not set in environment!")
 
 app = Flask(__name__)
 app.secret_key = "KalluFinder_Secure_Key_2026"
 
 # Admin Configuration
 ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "9177@Shiva"
+import os
+from werkzeug.security import check_password_hash
+
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD_HASH = os.environ.get("ADMIN_PASSWORD_HASH")
 
 def get_db_connection():
     conn = sqlite3.connect('database.db')
@@ -124,9 +135,14 @@ def update_status(status):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if request.form.get('username') == ADMIN_USERNAME and request.form.get('password') == ADMIN_PASSWORD:
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if username == ADMIN_USERNAME and check_password_hash(ADMIN_PASSWORD_HASH, password):
             session['admin'] = True
             return redirect(url_for('admin'))
+
+        return "Invalid username or password"
     return render_template('login.html')
 
 @app.route('/admin')
