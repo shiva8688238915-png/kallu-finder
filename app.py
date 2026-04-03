@@ -34,6 +34,14 @@ def init_db():
             status TEXT DEFAULT 'Available'
         )
     ''')
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS complaints (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            seller_name TEXT,
+            problem TEXT,
+            location TEXT
+        )
+    ''')
     conn.commit()
     conn.close()
 
@@ -142,11 +150,15 @@ def login():
 
 @app.route('/admin')
 def admin():
-    if not session.get('admin'): return redirect(url_for('login'))
+    if not session.get('admin'):
+        return redirect(url_for('login'))
+
     conn = get_db_connection()
     sellers = conn.execute("SELECT * FROM sellers").fetchall()
+    complaints = conn.execute("SELECT * FROM complaints").fetchall()
     conn.close()
-    return render_template('admin.html', sellers=sellers)
+
+    return render_template('admin.html', sellers=sellers, complaints=complaints)
 
 @app.route('/add_seller', methods=['POST'])
 def add_seller():
@@ -184,6 +196,35 @@ def delete_seller(id):
 def logout():
     session.clear()
     return redirect(url_for('home'))
+
+@app.route('/add_complaint', methods=['POST'])
+def add_complaint():
+    data = request.json
+
+    seller = data.get('seller')
+    problem = data.get('problem')
+    location = data.get('location')
+
+    conn = get_db_connection()
+    conn.execute(
+        "INSERT INTO complaints (seller_name, problem, location) VALUES (?, ?, ?)",
+        (seller, problem, location)
+    )
+    conn.commit()
+    conn.close()
+
+    return {"status": "success"}
+@app.route('/delete_complaint/<int:id>')
+def delete_complaint(id):
+    if not session.get('admin'):
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    conn.execute("DELETE FROM complaints WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('admin'))
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

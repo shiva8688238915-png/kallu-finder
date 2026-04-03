@@ -131,25 +131,108 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .support-btn {
-    position: fixed;        /* Fix position on screen */
-    bottom: 20px;           /* 20px from bottom */
-    right: 20px;            /* 20px from right */
-    background: #27ae60;    /* Green color */
-    color: white;           /* Text color */
-    border: none;           /* Remove border */
-    padding: 12px 18px;     /* Space inside button */
-    border-radius: 30px;    /* Rounded shape */
-    font-size: 14px;        /* Text size */
-    cursor: pointer;        /* Hand cursor */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Shadow */
-    z-index: 9999;          /* Always on top */
+        /* Chat Button */
+#chatBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 18px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-.support-btn:hover {
-    background: #219150;    /* Dark green on hover */
+/* Chat Box */
+#chatBox {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+/* Header */
+#chatHeader {
+    background: var(--primary-green);
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Body */
+#chatBody {
+    padding: 10px;
+}
+
+#chatBody button {
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #f1f3f4;
+    cursor: pointer;
 }
     </style>
+    <script>
+
+// OPEN CHAT
+function openChat() {
+    document.getElementById("chatBox").style.display = "block";
+}
+
+// CLOSE CHAT
+function closeChat() {
+    document.getElementById("chatBox").style.display = "none";
+}
+
+// REPORT ISSUE (MAIN FEATURE)
+function reportIssue() {
+
+    let seller = prompt("Enter Seller Name:");
+    let problem = prompt("Enter Problem:");
+    let location = prompt("Enter Location:");
+
+    // Send data to Flask backend
+    fetch('/add_complaint', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            seller: seller,
+            problem: problem,
+            location: location
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert("Complaint submitted successfully ✅");
+    });
+}
+
+// KALLU INFO
+function askKallu() {
+    document.getElementById("chatMessages").innerHTML += 
+        "<p><b>Bot:</b> Kallu 🍶 is a natural drink from palm trees. It is healthy and refreshing.</p>";
+}
+
+// MAIL SUPPORT
+function mailSupport() {
+    document.getElementById("chatMessages").innerHTML += 
+        "<p><b>Bot:</b> Contact: shiva8688238915@gmail.com</p>";
+}
+
+</script>
 </head>
 <body>
 
@@ -236,22 +319,25 @@
         }
     }
     </script>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),
-s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/69cf670fc710b01c3973db37/1jl92l6cb';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
-<button onclick="Tawk_API.toggle()" class="support-btn">
-    💬 Customer Support
-</button>
+    <!-- Chat Button -->
+<button id="chatBtn" onclick="openChat()">💬</button>
+<!-- Chat Box -->
+<div id="chatBox">
+    <div id="chatHeader">
+        Kallu Support 🍶
+        <span onclick="closeChat()">✖</span>
+    </div>
+
+    <div id="chatBody">
+        <p><b>Bot:</b> Welcome to Kallu Finder 🍶</p>
+        <p>Select an option:</p>
+
+        <button onclick="reportIssue()">🚨 Report Issue</button>
+        <button onclick="askKallu()">🍶 About Kallu</button>
+        <button onclick="mailSupport()">📧 Mail Support</button>
+
+        <div id="chatMessages"></div>
+    </div>
+</div>
 </body>
 </html>

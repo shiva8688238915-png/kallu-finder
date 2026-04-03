@@ -67,7 +67,41 @@
             <button type="submit" class="btn btn-add">Add Seller</button>
         </form>
     </section>
+<!-- 🚨 COMPLAINTS SECTION -->
+<section>
+    <h2>🚨 Complaints</h2>
 
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Seller</th>
+                <th>Problem</th>
+                <th>Location</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in complaints %}
+            <tr>
+                <td>{{ c[0] }}</td>
+                <td>{{ c[1] }}</td>
+                <td>{{ c[2] }}</td>
+                <td>{{ c[3] }}</td>
+                <td>
+                    <a href="/delete_complaint/{{ c[0] }}" 
+                       class="btn btn-delete"
+                       onclick="return confirm('Delete this complaint?')">
+                       Delete
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
     <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
 
     <section>
