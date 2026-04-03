@@ -131,6 +131,24 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .support-btn {
+    position: fixed;        /* Fix position on screen */
+    bottom: 20px;           /* 20px from bottom */
+    right: 20px;            /* 20px from right */
+    background: #27ae60;    /* Green color */
+    color: white;           /* Text color */
+    border: none;           /* Remove border */
+    padding: 12px 18px;     /* Space inside button */
+    border-radius: 30px;    /* Rounded shape */
+    font-size: 14px;        /* Text size */
+    cursor: pointer;        /* Hand cursor */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Shadow */
+    z-index: 9999;          /* Always on top */
+}
+
+.support-btn:hover {
+    background: #219150;    /* Dark green on hover */
+}
     </style>
 </head>
 <body>
@@ -218,12 +236,22 @@
         }
     }
     </script>
-
+<!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-...
+(function(){
+var s1=document.createElement("script"),
+s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/69cf670fc710b01c3973db37/1jl92l6cb';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
 </script>
-
-
+<!--End of Tawk.to Script-->
+<button onclick="Tawk_API.toggle()" class="support-btn">
+    💬 Customer Support
+</button>
 </body>
 </html>
