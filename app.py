@@ -14,11 +14,6 @@ app.secret_key = "KalluFinder_Secure_Key_2026"
 
 # Admin Configuration
 ADMIN_USERNAME = "admin"
-import os
-from werkzeug.security import check_password_hash
-
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD_HASH = os.environ.get("ADMIN_PASSWORD_HASH")
 
 def get_db_connection():
     conn = sqlite3.connect('database.db')
