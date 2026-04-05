@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Terms & Conditions | Kallu Finder</title>
+
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Arial;
+            background: var(--bg-light);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            max-width: 700px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary-green);
+            text-align: center;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        ul {
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        .warning {
+            margin-top: 20px;
+            padding: 12px;
+            background: #fff3cd;
+            border-radius: 10px;
+            color: #856404;
+        }
+
+        .back-btn {
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+            padding: 12px;
+            background: var(--primary-green);
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: #1b5e20;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📜 Terms & Conditions</h1>
+
+    <p>
+        By using <b>Kallu Finder 🍶</b>, you agree to the following terms and conditions:
+    </p>
+
+    <ul>
+        <li>You must be 18 years or older to use this application.</li>
+        <li>This platform only provides information about nearby sellers.</li>
+        <li>We do not produce, sell, or deliver kallu directly.</li>
+        <li>We are not responsible for product quality, pricing, or disputes.</li>
+        <li>Users must follow all local laws and regulations.</li>
+    </ul>
+
+    <div class="warning">
+        ⚠️ <b>Important:</b> Excessive consumption of alcohol may harm your health.  
+        Please consume responsibly.
+    </div>
+
+    <a href="{{ url_for('home') }}" class="back-btn">⬅ Back to Home</a>
+
+</div>
+
+</body>
+</html>

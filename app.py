@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, url_for
+import requests
 import sqlite3
 import os
 from werkzeug.security import check_password_hash
@@ -61,6 +62,47 @@ def home():
 def benefits():
     """This route loads your benefits.html file"""
     return render_template('benefits.html')
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/search_place')
+def search_place():
+    place = request.args.get('place')
+
+    if not place:
+        return "Please enter a location"
+
+    try:
+        url = "https://nominatim.openstreetmap.org/search"
+
+        params = {
+            "q": place,
+            "format": "json"
+        }
+
+        headers = {
+            "User-Agent": "KalluFinderApp"   # ✅ VERY IMPORTANT
+        }
+
+        response = requests.get(url, params=params, headers=headers)
+
+        # Check if request successful
+        if response.status_code != 200:
+            return "Error fetching location"
+
+        data = response.json()
+
+        if not data:
+            return "Location not found"
+
+        lat = float(data[0]['lat'])
+        lon = float(data[0]['lon'])
+
+        return redirect(url_for('search', lat=lat, lon=lon))
+
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 @app.route('/search')
 def search():
@@ -223,8 +265,10 @@ def delete_complaint(id):
     conn.execute("DELETE FROM complaints WHERE id=?", (id,))
     conn.commit()
     conn.close()
-
     return redirect(url_for('admin'))
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

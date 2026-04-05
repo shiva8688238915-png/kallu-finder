@@ -220,6 +220,17 @@ function reportIssue() {
     });
 }
 
+function searchLocation() {
+    let place = document.getElementById("manualLocation").value;
+
+    if (!place) {
+        alert("Please enter a location");
+        return;
+    }
+
+    window.location.href = `/search_place?place=${place}`;
+}
+
 // KALLU INFO
 function askKallu() {
     document.getElementById("chatMessages").innerHTML += 
@@ -248,9 +259,24 @@ function mailSupport() {
         </button>
         
         <div id="loader"></div>
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+    
+    <input type="text" id="manualLocation" 
+           placeholder="Enter village / city"
+           style="flex:1; padding:12px; border-radius:10px; border:1px solid #ccc;">
+    
+    <button onclick="searchLocation()" 
+            style="padding:12px; background:#1a73e8; color:white; border:none; border-radius:10px;">
+        🔎
+    </button>
+
+</div>
 
         <a href="{{ url_for('benefits') }}" class="btn btn-outline">
             💡 Health Benefits
+        </a>
+        <a href="/about" class="btn btn-outline">
+            📖 About Kallu
         </a>
 
         <div class="login-section">
@@ -338,6 +364,11 @@ function mailSupport() {
 
         <div id="chatMessages"></div>
     </div>
+</div>
+<div style="position:fixed; bottom:10px; width:100%; text-align:center;">
+    <a href="/terms" style="font-size:12px; color:#777;">
+        Terms & Conditions
+    </a>
 </div>
 </body>
 </html>
