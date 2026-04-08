@@ -269,6 +269,9 @@ def delete_complaint(id):
 @app.route('/terms')
 def terms():
     return render_template('terms.html')
+@app.route('/ping')
+def ping():
+    return "OK"
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
