@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, send_from_directory
 import requests
 import sqlite3
 import os
@@ -274,6 +274,9 @@ def delete_complaint(id):
 @app.route('/terms')
 def terms():
     return render_template('terms.html')
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory('.', 'sitemap.xml')
 @app.route('/ping')
 def ping():
     return "OK"
