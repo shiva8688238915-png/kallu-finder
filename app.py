@@ -62,9 +62,14 @@ def home():
 def benefits():
     """This route loads your benefits.html file"""
     return render_template('benefits.html')
+
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/google526960099f408a7f.html')
+def google_verify():
+    return app.send_static_file('google526960099f408a7f.html')
 
 @app.route('/search_place')
 def search_place():
