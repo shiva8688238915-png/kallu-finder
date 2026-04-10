@@ -14,6 +14,7 @@
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="canonical" href="https://kallu-finder.onrender.com/">
     <style>
         :root {
             --primary-green: #2e7d32;
@@ -256,15 +257,19 @@ function mailSupport() {
 
     <div class="container">
         <img src="{{ url_for('static', filename='images/kallu.jpg') }}" 
-             alt="Fresh Kallu" 
-             class="hero-img">
+            alt="Fresh Kallu (Palm Wine) in Telangana and Andhra Pradesh"
+            class="hero-img">
 
         <h1>Kallu Finder</h1>
        <h2 style="color: #5f6368; font-size: 16px; font-weight: normal;">
         Find Fresh Kallu Near You 🍶
         </h2>
-       <h3 style="display:none;">
-        Find Kallu Near Me in Telangana and Andhra Pradesh
+        <p style="font-size:14px; color:#555;">
+        Kallu Finder helps you locate fresh palm wine (kallu) sellers near your village or city. 
+        Easily find trusted sellers in Telangana and Andhra Pradesh with location-based search.
+        </p>
+       <h3 style="font-size:13px; color:#888;">
+        Find Kallu Near Me in Telangana & Andhra Pradesh
         </h3>
 
         <button class="btn btn-primary" onclick="getLocation()" id="locationBtn">
