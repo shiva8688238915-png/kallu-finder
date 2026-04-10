@@ -1,0 +1,14 @@
+{
+  "name": "Kallu Finder",
+  "short_name": "Kallu",
+  "icons": [
+    {
+      "src": "/static/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "theme_color": "#2e7d32",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
