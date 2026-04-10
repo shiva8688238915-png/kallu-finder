@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kallu Finder | Fresh & Local</title>
-   
+    <title>Kallu Finder™ | Fresh & Local</title>
+    <meta name="description" content="Kallu Finder helps users find nearby palm wine (kallu) sellers easily using location.">
+
+    <meta name="keywords" content="kallu finder, palm wine, toddy near me, kallu near me, Andhra Pradesh kallu, Telangana kallu">
+
+    <meta name="author" content="Shiva">
+
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}">
@@ -253,7 +258,10 @@ function mailSupport() {
              alt="Fresh Kallu" 
              class="hero-img">
 
-        <h1>Kallu Finder</h1>
+        <h1>Kallu Finder™ 🍶</h1>
+        <p style="font-size:14px; color:#666; margin-top:-15px;">
+            Find Fresh Kallu Near You 🍶
+        </p>
 
         <button class="btn btn-primary" onclick="getLocation()" id="locationBtn">
             📍 Use My Location
@@ -356,7 +364,7 @@ function mailSupport() {
     </div>
 
     <div id="chatBody">
-        <p><b>Bot:</b> Welcome to Kallu Finder 🍶</p>
+        <p><b>Bot:</b> Welcome to Kallu Finder™ 🍶</p>
         <p>Select an option:</p>
 
         <button onclick="reportIssue()">🚨 Report Issue</button>
@@ -367,9 +375,15 @@ function mailSupport() {
     </div>
 </div>
 <div style="position:fixed; bottom:10px; width:100%; text-align:center;">
+
+    <p style="font-size:12px; color:#777; margin:2px;">
+        © 2026 Kallu Finder™ | All Rights Reserved
+    </p>
+
     <a href="/terms" style="font-size:12px; color:#777;">
         Terms & Conditions
     </a>
+
 </div>
 </body>
 </html>
